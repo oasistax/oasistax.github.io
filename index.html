@@ -51,7 +51,7 @@
             interests: [],
             phone: ''
           });
-
+          const [isModalOpen, setIsModalOpen] = useState(false);
           const handleSubmit = () => {
             if (!formData.businessType || !formData.industry || !formData.yearsInBusiness || 
                 formData.interests.length === 0 || !formData.phone) {
@@ -483,9 +483,119 @@
                   </div>
                   <div className="border-t border-gray-700 pt-6 text-center text-sm text-gray-500">
                     <p>© 2026 오아시스 세무회계. All rights reserved.</p>
+                    {/* 추가된 버튼: 클릭하면 팝업이 열립니다 */}
+            <button 
+              onClick={() => setIsModalOpen(true)}
+              className="mt-4 md:mt-0 hover:text-white underline transition decoration-gray-600 underline-offset-4"
+            >
+              개인정보처리방침
+            </button>
                   </div>
                 </div>
               </footer>
+              {/* --- 개인정보처리방침 팝업창 --- */}
+{isModalOpen && (
+  <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+    <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[85vh] flex flex-col shadow-2xl animate-in fade-in zoom-in duration-200">
+      
+      {/* 팝업 헤더 */}
+      <div className="p-6 border-b flex justify-between items-center bg-gray-50 rounded-t-2xl">
+        <h4 className="text-xl font-bold text-gray-900">개인정보처리방침</h4>
+        <button 
+          onClick={() => setIsModalOpen(false)} 
+          className="p-2 hover:bg-gray-200 rounded-full transition text-gray-500"
+        >
+          <IconWrapper name="x" size={24} />
+        </button>
+      </div>
+      
+      {/* 팝업 내용 (스크롤 영역) */}
+      <div className="p-8 overflow-y-auto text-gray-600 leading-relaxed text-sm bg-white custom-scrollbar">
+        <div className="space-y-8">
+          <p className="text-gray-500 leading-relaxed">
+            <strong className="text-teal-700">오아시스 세무회계</strong>(이하 '회사’라 함)은(는) 개인정보보호법에 따라 이용자의 개인정보 보호 및 권익을 보호하고 개인정보와 관련한 이용자의 고충을 원활하게 처리할 수 있도록 다음과 같은 처리방침을 두고 있습니다. 회사는 개인정보처리방침을 개정하는 경우 웹사이트 공지사항(또는 개별공지)을 통하여 공지할 것입니다.
+          </p>
+
+          <section>
+            <h5 className="font-bold text-gray-900 text-base mb-3 border-l-4 border-teal-600 pl-3">1. 개인정보의 수집 및 이용 목적</h5>
+            <div className="space-y-2">
+              <p>① 회사는 개인정보를 다음의 목적을 위해 처리합니다. 처리한 개인정보는 다음의 목적 이외의 용도로는 사용되지 않으며 이용 목적이 변경될 경우에는 개인정보 보호법 제18조에 따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.</p>
+              <ul className="list-disc pl-5 space-y-1">
+                <li><strong>가. 고객상담 :</strong> 가맹 관련 문의 확인 및 답변을 위한 연락통지, 처리결과 통보 등을 목적으로 개인정보를 처리합니다.</li>
+                <li><strong>나. 정보제공 :</strong> 회사에서 주최하는 프로그램에 대한 정보 제공 등의 목적으로 개인정보를 처리합니다.</li>
+              </ul>
+              <p>② 회사는 다음과 같은 방법으로 개인정보를 수집합니다. (홈페이지)</p>
+            </div>
+          </section>
+
+          <section>
+            <h5 className="font-bold text-gray-900 text-base mb-3 border-l-4 border-teal-600 pl-3">2. 처리하는 개인정보 항목</h5>
+            <div className="bg-gray-50 p-4 rounded-lg space-y-3 text-xs md:text-sm">
+              <div>
+                <strong>가. 고객상담</strong>
+                <p>- 필수항목 : 이름, 연락처 (접속 IP 정보, 쿠키, 서비스 이용 기록, 접속 로그)</p>
+              </div>
+              <div>
+                <strong>나. 정보제공</strong>
+                <p>- 필수항목 : 이름, 연락처 (접속 IP 정보, 쿠키, 서비스 이용 기록, 접속 로그)</p>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h5 className="font-bold text-gray-900 text-base mb-3 border-l-4 border-teal-600 pl-3">3. 개인정보의 처리 및 보유 기간</h5>
+            <p>① 회사는 법령에 따른 개인정보 보유·이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의 받은 개인정보 보유, 이용기간 내에서 개인정보를 처리, 보유합니다.</p>
+            <p>② 구체적인 보유 기간: <strong>5년</strong></p>
+          </section>
+
+          <section>
+            <h5 className="font-bold text-gray-900 text-base mb-3 border-l-4 border-teal-600 pl-3">4. 개인정보의 파기</h5>
+            <p>회사는 원칙적으로 목적 달성 후 지체 없이 해당 개인정보를 파기합니다. 전자적 파일은 재생 불가 기술로 삭제하며, 종이 문서는 분쇄하거나 소각합니다.</p>
+          </section>
+
+          <section>
+            <h5 className="font-bold text-gray-900 text-base mb-3 border-l-4 border-teal-600 pl-3">5. 개인정보의 제3자 제공</h5>
+            <p>회사는 이용자의 사전 동의 없이는 본래의 범위를 초과하여 처리하거나 제3자에게 제공하지 않습니다. 단, 법령에 의해 요구되는 경우 등은 예외로 합니다.</p>
+          </section>
+
+          <section>
+            <h5 className="font-bold text-gray-900 text-base mb-3 border-l-4 border-teal-600 pl-3">6. 개인정보 처리의 위탁</h5>
+            <p>회사는 개인정보를 위탁하지 않으며, 위탁 시 최소 15일 전에 공지사항을 통해 고지하겠습니다.</p>
+          </section>
+
+          <section>
+            <h5 className="font-bold text-gray-900 text-base mb-3 border-l-4 border-teal-600 pl-3">7. 정보주체의 권리·의무 및 행사방법</h5>
+            <p>정보주체는 언제든지 열람, 정정, 삭제, 처리정지 요구 등의 권리를 행사할 수 있습니다.</p>
+          </section>
+
+          <section>
+            <h5 className="font-bold text-gray-900 text-base mb-3 border-l-4 border-teal-600 pl-3">8. 쿠키(Cookie) 설치 및 거부</h5>
+            <p>회사는 맞춤형 서비스 제공을 위해 쿠키를 운용합니다. 이용자는 브라우저 설정을 통해 쿠키 저장을 거부할 수 있습니다.</p>
+          </section>
+
+          <section className="bg-teal-50 p-5 rounded-xl border border-teal-100">
+            <h5 className="font-bold text-teal-900 text-base mb-3">9. 개인정보 관리 책임자</h5>
+            <div className="space-y-1 text-teal-800">
+              <p><strong>담당자:</strong> 박수환</p>
+              <p><strong>연락처:</strong> 010-3054-8572</p>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      {/* 팝업 푸터 */}
+      <div className="p-4 border-t bg-gray-50 rounded-b-2xl text-center">
+        <button 
+          onClick={() => setIsModalOpen(false)}
+          className="w-full md:w-auto bg-teal-600 text-white px-12 py-3 rounded-xl font-bold hover:bg-teal-700 transition shadow-md"
+        >
+          확인 및 닫기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* --- 팝업창 코드 끝 --- */}
             </div>
           );
         }
