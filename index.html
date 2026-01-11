@@ -13,19 +13,18 @@
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
-        body { font-family: 'Noto Sans KR', sans-serif; }
+        body { font-family: 'Noto Sans KR', sans-serif; overflow-x: hidden; }
+        /* 스크롤바 커스텀 */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; }
     </style>
 </head>
 <body>
     <div id="root"></div>
 
     <script type="text/babel">
-        // 2. 환경 설정 (import 구문을 브라우저용으로 변환)
-        // 원문: import React, { useState } from 'react';
         const { useState, useEffect } = React;
 
-        // 원문: import { CheckCircle, ChevronDown, Phone, Mail, MapPin } from 'lucide-react';
-        // 브라우저에서 아이콘이 바로 보이도록 래퍼 컴포넌트를 정의합니다.
         const IconWrapper = ({ name, size, className }) => {
             useEffect(() => {
                 if (window.lucide) window.lucide.createIcons();
@@ -39,10 +38,6 @@
         const Mail = (props) => <IconWrapper name="mail" {...props} />;
         const MapPin = (props) => <IconWrapper name="map-pin" {...props} />;
 
-        // =================================================================================
-        // ▼ 여기서부터 대표님이 주신 원문 코드가 100% 그대로 시작됩니다. (수정 없음)
-        // =================================================================================
-
         function OasisLandingPage() {
           const [formData, setFormData] = useState({
             businessType: '',
@@ -52,6 +47,7 @@
             phone: ''
           });
           const [isModalOpen, setIsModalOpen] = useState(false);
+
           const handleSubmit = () => {
             if (!formData.businessType || !formData.industry || !formData.yearsInBusiness || 
                 formData.interests.length === 0 || !formData.phone) {
@@ -72,46 +68,43 @@
 
           return (
             <div className="min-h-screen bg-white">
-              {/* Header */}
-<header className="bg-gradient-to-r from-teal-700 to-teal-600 text-white py-4 px-6 shadow-lg sticky top-0 z-50">
-  <div className="max-w-6xl mx-auto flex justify-between items-center">
-    <div className="flex items-center space-x-3">
-      {/* --- 로고 이미지 삽입 영역 시작 --- */}
-      <div className="w-10 h-10 flex items-center justify-center overflow-hidden">
-        <img 
-          src="oasislogo1.png"  /* ← 여기에 로고 이미지 파일 경로를 넣으세요 (예: ./images/logo.png) */
-          alt="오아시스 세무회계 로고" 
-          className="w-full h-full object-contain" 
-        />
-      </div>
-      {/* --- 로고 이미지 삽입 영역 끝 --- */}
-      <h1 className="text-2xl font-bold tracking-tight">오아시스 세무회계</h1>
-    </div>
-    <button 
-      onClick={() => document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth' })}
-      className="bg-white text-teal-700 px-6 py-2 rounded-full font-semibold hover:bg-teal-50 transition"
-    >
+              {/* Header: 모바일에서 요소가 겹치지 않게 조절 */}
+              <header className="bg-gradient-to-r from-teal-700 to-teal-600 text-white py-3 md:py-4 px-4 md:px-6 shadow-lg sticky top-0 z-50">
+                <div className="max-w-6xl mx-auto flex justify-between items-center">
+                  <div className="flex items-center space-x-2 md:space-x-3 overflow-hidden">
+                    <div className="w-8 h-8 md:w-10 md:h-10 flex-shrink-0 bg-white rounded flex items-center justify-center overflow-hidden">
+                      <img 
+                        src="oasislogo1.png" 
+                        alt="오아시스 세무회계 로고" 
+                        className="w-full h-full object-contain" 
+                      />
+                    </div>
+                    <h1 className="text-lg md:text-2xl font-bold tracking-tight whitespace-nowrap">오아시스 세무회계</h1>
+                  </div>
+                  <button 
+                    onClick={() => document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth' })}
+                    className="bg-white text-teal-700 px-3 py-1.5 md:px-6 md:py-2 rounded-full text-xs md:text-base font-semibold hover:bg-teal-50 transition shadow-sm whitespace-nowrap"
+                  >
                     무료 진단 받기
                   </button>
                 </div>
               </header>
 
-              {/* Hero Section */}
-              <section className="bg-gradient-to-br from-teal-50 via-blue-50 to-cyan-50 py-20 px-6">
+              {/* Hero Section: 모바일에서 텍스트 크기 및 버튼 배치 조절 */}
+              <section className="bg-gradient-to-br from-teal-50 via-blue-50 to-cyan-50 py-12 md:py-20 px-6">
                 <div className="max-w-6xl mx-auto text-center">
-                  <div className="inline-block bg-teal-100 text-teal-800 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                  <div className="inline-block bg-teal-100 text-teal-800 px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold mb-6">
                     경영컨설팅 전문기업
                   </div>
-                  <h2 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                    대표님 회사,<br/>
-                    받을 수 있는 정부지원·절세 혜택<br/>
+                  <h2 className="text-2xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                    대표님 회사,<br className="md:hidden" /> 받을 수 있는 정부지원·절세 혜택<br />
                     <span className="text-teal-700">놓치고 계신 건 아닐까요?</span>
                   </h2>
-                  <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                    정책자금 · 기업인증 · 절세 · 고용지원금 · 법인제도 정비<br/>
+                  <p className="text-sm md:text-xl text-gray-600 mb-8 leading-relaxed">
+                    정책자금 · 기업인증 · 절세 · 고용지원금 · 법인제도 정비<br className="hidden md:block" />
                     대표님 상황에 맞는 혜택을 <span className="font-semibold text-teal-700">'무료 진단'</span>으로 먼저 확인하세요.
                   </p>
-                  <div className="flex justify-center space-x-4">
+                  <div className="flex flex-col md:flex-row justify-center space-y-3 md:space-y-0 md:space-x-4">
                     <button 
                       onClick={() => document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth' })}
                       className="bg-teal-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-teal-700 transition shadow-lg"
@@ -128,13 +121,13 @@
                 </div>
               </section>
 
-              {/* Pain Point Section */}
+              {/* Pain Point Section: 모바일에서 리스트 레이아웃 최적화 */}
               <section className="py-16 px-6 bg-white">
                 <div className="max-w-5xl mx-auto">
-                  <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">
+                  <h3 className="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-12">
                     대표님, 혹시 <span className="text-teal-700">이런 상황</span>이신가요?
                   </h3>
-                  <div className="grid md:grid-cols-2 gap-6">
+                  <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                     {[
                       '세무사·노무사 말만 듣고 그냥 유지 중이다',
                       '정부지원금은 대기업이나 특정 업종만 받는 줄 알았다',
@@ -143,34 +136,32 @@
                       '세금은 계속 늘어나는데 줄일 방법이 보이지 않는다',
                       '회사 신용등급 관리, 한 번도 제대로 받아본 적 없다'
                     ].map((item, idx) => (
-                      <div key={idx} className="flex items-start space-x-3 p-4 bg-gray-50 rounded-lg border-l-4 border-teal-600">
-                        <CheckCircle className="text-teal-600 flex-shrink-0 mt-1" size={20} />
-                        <p className="text-gray-700 font-medium">{item}</p>
+                      <div key={idx} className="flex items-start space-x-3 p-4 bg-gray-50 rounded-lg border-l-4 border-teal-600 shadow-sm">
+                        <CheckCircle className="text-teal-600 flex-shrink-0 mt-1" size={18} />
+                        <p className="text-gray-700 font-medium text-sm md:text-base">{item}</p>
                       </div>
                     ))}
                   </div>
                   <div className="mt-8 text-center p-6 bg-teal-50 rounded-lg border border-teal-200">
-                    <p className="text-lg font-semibold text-teal-900">
+                    <p className="text-base md:text-lg font-semibold text-teal-900">
                       👉 3개 이상 해당된다면, 무료 진단이 꼭 필요합니다.
                     </p>
                   </div>
                 </div>
               </section>
 
-              {/* Solution Section */}
+              {/* Solution Section: 카드 크기 및 텍스트 비율 조정 */}
               <section className="py-16 px-6 bg-gradient-to-br from-teal-600 to-blue-700 text-white">
                 <div className="max-w-5xl mx-auto">
-                  <h3 className="text-4xl font-bold text-center mb-6">
+                  <h3 className="text-2xl md:text-4xl font-bold text-center mb-6 leading-tight">
                     대표님 사업에 맞춰<br/>
-                    받을 수 있는 혜택은 늘리고,<br/>
-                    불필요한 비용과 리스크는 줄입니다.
+                    받을 수 있는 혜택은 늘리고,<br className="md:hidden" /> 불필요한 비용과 리스크는 줄입니다.
                   </h3>
-                  <p className="text-xl text-center mb-12 text-teal-50">
-                    경영컨설팅은 단순한 서류 대행이 아닙니다.<br/>
+                  <p className="text-base md:text-xl text-center mb-12 text-teal-50">
+                    경영컨설팅은 단순한 서류 대행이 아닙니다.<br className="hidden md:block" />
                     대표님 회사의 현재 상태 → 개선 포인트 → 실행 전략까지 한 번에 정리해드립니다.
                   </p>
-                  
-                  <div className="grid md:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                     {[
                       { title: '정책자금 및 정부지원사업 진단', icon: '💰' },
                       { title: '기업 인증 · 기업부설연구소 설립', icon: '🏆' },
@@ -182,60 +173,50 @@
                       { title: '마케팅 전략 · 노무 자문', icon: '📈' }
                     ].map((service, idx) => (
                       <div key={idx} className="bg-white/10 backdrop-blur-sm p-6 rounded-lg border border-white/20 hover:bg-white/20 transition">
-                        <div className="text-4xl mb-3">{service.icon}</div>
-                        <h4 className="font-bold text-lg">{service.title}</h4>
+                        <div className="text-3xl md:text-4xl mb-3">{service.icon}</div>
+                        <h4 className="font-bold text-base md:text-lg leading-tight">{service.title}</h4>
                       </div>
                     ))}
-                  </div>
-
-                  <div className="mt-12 text-center">
-                    <p className="text-2xl font-bold">
-                      대표님은 사업에만 집중하세요.<br/>
-                      <span className="text-teal-200">복잡한 제도와 구조는 저희가 정리합니다.</span>
-                    </p>
                   </div>
                 </div>
               </section>
 
-              {/* Why Us Section */}
+              {/* Why Us Section: 원문 내용 유지 */}
               <section className="py-16 px-6 bg-white">
                 <div className="max-w-5xl mx-auto">
-                  <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">
+                  <h3 className="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-12">
                     왜 <span className="text-teal-700">무료 진단</span>부터 진행할까요?
                   </h3>
-                  
-                  <div className="bg-gray-50 p-8 rounded-2xl border-2 border-teal-100">
+                  <div className="bg-gray-50 p-6 md:p-8 rounded-2xl border-2 border-teal-100">
                     <div className="grid md:grid-cols-2 gap-8 mb-8">
                       <div className="flex items-start space-x-3">
-                        <span className="text-3xl">❌</span>
+                        <span className="text-2xl md:text-3xl">❌</span>
                         <div>
-                          <h4 className="font-bold text-lg text-gray-900 mb-2">무조건 진행 권유하지 않습니다</h4>
-                          <p className="text-gray-600">대표님께 맞지 않는 서비스는 추천하지 않습니다</p>
+                          <h4 className="font-bold text-base md:text-lg text-gray-900 mb-1">무조건 진행 권유하지 않습니다</h4>
+                          <p className="text-sm md:text-base text-gray-600">대표님께 맞지 않는 서비스는 추천하지 않습니다</p>
                         </div>
                       </div>
                       <div className="flex items-start space-x-3">
-                        <span className="text-3xl">❌</span>
+                        <span className="text-2xl md:text-3xl">❌</span>
                         <div>
-                          <h4 className="font-bold text-lg text-gray-900 mb-2">필요 없는 컨설팅을 억지로 권하지 않습니다</h4>
-                          <p className="text-gray-600">실질적인 도움이 되는 것만 제안합니다</p>
+                          <h4 className="font-bold text-base md:text-lg text-gray-900 mb-1">필요 없는 컨설팅을 억지로 권하지 않습니다</h4>
+                          <p className="text-sm md:text-base text-gray-600">실질적인 도움이 되는 것만 제안합니다</p>
                         </div>
                       </div>
                     </div>
-
                     <div className="border-t-2 border-teal-200 pt-8">
-                      <p className="text-lg text-gray-700 mb-6 text-center font-semibold">
+                      <p className="text-base md:text-lg text-gray-700 mb-6 text-center font-semibold">
                         대표님 회사마다 받을 수 있는 제도, 우선순위, 전략은 모두 다릅니다.
                       </p>
-                      
-                      <div className="space-y-3">
+                      <div className="space-y-3 max-w-lg mx-auto">
                         {[
                           '무료 진단으로 가능성부터 확인',
                           '필요한 부분만 선택적으로 진행',
                           '단기 혜택 + 중·장기 구조 개선을 함께 봅니다'
                         ].map((item, idx) => (
-                          <div key={idx} className="flex items-center space-x-3 bg-white p-4 rounded-lg">
-                            <CheckCircle className="text-teal-600 flex-shrink-0" size={24} />
-                            <p className="text-gray-800 font-medium text-lg">{item}</p>
+                          <div key={idx} className="flex items-center space-x-3 bg-white p-4 rounded-lg shadow-sm">
+                            <CheckCircle className="text-teal-600 flex-shrink-0" size={20} />
+                            <p className="text-gray-800 font-medium text-sm md:text-lg">{item}</p>
                           </div>
                         ))}
                       </div>
@@ -244,106 +225,87 @@
                 </div>
               </section>
 
-              {/* Process Section */}
+              {/* Process Section: 모바일 4단계 한 줄 배치 고려 */}
               <section className="py-16 px-6 bg-gray-50">
                 <div className="max-w-5xl mx-auto">
-                  <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">
+                  <h3 className="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-12">
                     상담은 <span className="text-teal-700">이렇게</span> 진행됩니다
                   </h3>
-                  
-                  <div className="grid md:grid-cols-4 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-6">
                     {[
                       { step: '1', title: '무료 진단 신청', desc: '간단한 정보 입력' },
                       { step: '2', title: '전문가 1:1 분석', desc: '맞춤형 진단 실시' },
                       { step: '3', title: '대표님 맞춤 전략 안내', desc: '실행 가능한 제안' },
                       { step: '4', title: '필요 시 실행 컨설팅 진행', desc: '대표님이 결정' }
                     ].map((item, idx) => (
-                      <div key={idx} className="text-center">
-                        <div className="w-16 h-16 bg-teal-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                      <div key={idx} className="text-center relative">
+                        <div className="w-12 h-12 md:w-16 md:h-16 bg-teal-600 text-white rounded-full flex items-center justify-center text-xl md:text-2xl font-bold mx-auto mb-4 shadow-md">
                           {item.step}
                         </div>
-                        <h4 className="font-bold text-lg text-gray-900 mb-2">{item.title}</h4>
-                        <p className="text-gray-600">{item.desc}</p>
+                        <h4 className="font-bold text-base md:text-lg text-gray-900 mb-2">{item.title}</h4>
+                        <p className="text-sm text-gray-600 leading-tight">{item.desc}</p>
                       </div>
                     ))}
-                  </div>
-
-                  <div className="mt-12 text-center p-6 bg-teal-50 rounded-lg border-2 border-teal-200">
-                    <p className="text-lg font-semibold text-teal-900">
-                      무료 진단만 받아보셔도 현재 회사의 위치와 방향이 정리됩니다.
-                    </p>
                   </div>
                 </div>
               </section>
 
-              {/* Trust Section */}
+              {/* Trust Section: 원문 보존 */}
               <section className="py-16 px-6 bg-white">
                 <div className="max-w-5xl mx-auto">
-                  <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">
+                  <h3 className="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-12">
                     <span className="text-teal-700">대표님 입장</span>에서 생각합니다
                   </h3>
-                  
-                  <div className="grid md:grid-cols-2 gap-6">
+                  <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                     {[
                       { icon: '👔', title: '개인사업자 · 법인사업자 전담 컨설팅', desc: '업종별 맞춤 전략 제시' },
                       { icon: '🏗️', title: '단기 지원금이 아닌 사업 구조 개선 중심', desc: '지속 가능한 성장 지원' },
                       { icon: '✅', title: '"될 수 있는 것 / 안 되는 것" 명확하게 안내', desc: '솔직하고 투명한 커뮤니케이션' },
                       { icon: '🤝', title: '무료 진단 후 대표님이 결정', desc: '강요 없는 컨설팅' }
                     ].map((item, idx) => (
-                      <div key={idx} className="bg-gradient-to-br from-teal-50 to-blue-50 p-6 rounded-xl border border-teal-100">
-                        <div className="text-4xl mb-4">{item.icon}</div>
-                        <h4 className="font-bold text-xl text-gray-900 mb-2">{item.title}</h4>
-                        <p className="text-gray-600">{item.desc}</p>
+                      <div key={idx} className="bg-gradient-to-br from-teal-50 to-blue-50 p-6 rounded-xl border border-teal-100 shadow-sm">
+                        <div className="text-3xl md:text-4xl mb-4">{item.icon}</div>
+                        <h4 className="font-bold text-lg md:text-xl text-gray-900 mb-2">{item.title}</h4>
+                        <p className="text-sm md:text-base text-gray-600 leading-relaxed">{item.desc}</p>
                       </div>
                     ))}
                   </div>
                 </div>
               </section>
 
-              {/* Contact Form Section */}
-              <section id="contact-form" className="py-16 px-6 bg-gradient-to-br from-teal-700 to-blue-800">
+              {/* Contact Form Section: 모바일에서 입력창 및 버튼 크기 최적화 */}
+              <section id="contact-form" className="py-16 px-4 md:px-6 bg-gradient-to-br from-teal-700 to-blue-800">
                 <div className="max-w-3xl mx-auto">
-                  <div className="text-center mb-12">
-                    <h3 className="text-4xl font-bold text-white mb-4">
+                  <div className="text-center mb-10">
+                    <h3 className="text-2xl md:text-4xl font-bold text-white mb-4">
                       지금 바로 <span className="text-teal-200">무료 진단</span> 받아보세요
                     </h3>
-                    <div className="flex justify-center space-x-8 text-white text-lg">
-                      <div className="flex items-center space-x-2">
-                        <CheckCircle size={20} />
-                        <span>상담 비용 0원</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <CheckCircle size={20} />
-                        <span>강요 없는 진단</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <CheckCircle size={20} />
-                        <span>맞춤 전략 안내</span>
-                      </div>
+                    <div className="flex flex-wrap justify-center gap-4 text-white text-sm md:text-lg opacity-90">
+                      <div className="flex items-center space-x-1.5"><CheckCircle size={16} /><span>상담 비용 0원</span></div>
+                      <div className="flex items-center space-x-1.5"><CheckCircle size={16} /><span>강요 없는 진단</span></div>
+                      <div className="flex items-center space-x-1.5"><CheckCircle size={16} /><span>맞춤 전략 안내</span></div>
                     </div>
                   </div>
 
-                  <div className="bg-white rounded-2xl p-8 shadow-2xl">
-                    <div className="mb-6 p-4 bg-teal-50 rounded-lg border border-teal-200">
+                  <div className="bg-white rounded-2xl p-6 md:p-8 shadow-2xl">
+                    <div className="mb-8 p-4 bg-teal-50 rounded-lg border border-teal-200 text-sm md:text-base">
                       <p className="text-gray-700 leading-relaxed">
-                        대표님 사업에 맞는 정책자금·절세·지원금 가능성을 <span className="font-bold text-teal-700">무료로 진단</span>해드립니다.<br/>
-                        아래 내용은 정확한 진단을 위한 기본 정보이며 상담 외 다른 용도로 사용되지 않습니다.
+                        대표님 사업에 맞는 정책자금·절세·지원금 가능성을 <span className="font-bold text-teal-700">무료로 진단</span>해드립니다. 아래 내용은 정확한 진단을 위한 기본 정보입니다.
                       </p>
                     </div>
 
                     <div className="space-y-6">
+                      {/* 사업자 유형 */}
                       <div>
                         <label className="block text-gray-700 font-semibold mb-3">사업자 유형 *</label>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 gap-3">
                           {['개인사업자', '법인사업자'].map(type => (
                             <button
                               key={type}
                               type="button"
                               onClick={() => setFormData({...formData, businessType: type})}
-                              className={`p-4 rounded-lg border-2 font-medium transition ${
-                                formData.businessType === type
-                                  ? 'border-teal-600 bg-teal-50 text-teal-700'
-                                  : 'border-gray-300 hover:border-teal-400'
+                              className={`p-3 md:p-4 rounded-lg border-2 font-medium transition ${
+                                formData.businessType === type ? 'border-teal-600 bg-teal-50 text-teal-700' : 'border-gray-200 hover:border-teal-400'
                               }`}
                             >
                               {type}
@@ -352,29 +314,29 @@
                         </div>
                       </div>
 
+                      {/* 업종 */}
                       <div>
                         <label className="block text-gray-700 font-semibold mb-3">업종 *</label>
                         <input
                           type="text"
                           value={formData.industry}
                           onChange={(e) => setFormData({...formData, industry: e.target.value})}
-                          placeholder="예: 제조업, 도소매, IT, 서비스업 등"
-                          className="w-full p-4 border-2 border-gray-300 rounded-lg focus:border-teal-600 focus:outline-none"
+                          placeholder="예: 제조업, 도소매, IT 등"
+                          className="w-full p-3 md:p-4 border-2 border-gray-200 rounded-lg focus:border-teal-600 focus:outline-none"
                         />
                       </div>
 
+                      {/* 사업 기간 */}
                       <div>
                         <label className="block text-gray-700 font-semibold mb-3">사업 운영 기간 *</label>
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-2 gap-2 md:gap-3">
                           {['1년 미만', '1~3년', '3~5년', '5년 이상'].map(period => (
                             <button
                               key={period}
                               type="button"
                               onClick={() => setFormData({...formData, yearsInBusiness: period})}
-                              className={`p-3 rounded-lg border-2 font-medium transition ${
-                                formData.yearsInBusiness === period
-                                  ? 'border-teal-600 bg-teal-50 text-teal-700'
-                                  : 'border-gray-300 hover:border-teal-400'
+                              className={`p-2 md:p-3 rounded-lg border-2 text-sm md:text-base font-medium transition ${
+                                formData.yearsInBusiness === period ? 'border-teal-600 bg-teal-50 text-teal-700' : 'border-gray-200 hover:border-teal-400'
                               }`}
                             >
                               {period}
@@ -383,36 +345,29 @@
                         </div>
                       </div>
 
+                      {/* 관심분야 */}
                       <div>
-                        <label className="block text-gray-700 font-semibold mb-3">현재 가장 궁금한 부분 (복수 선택 가능) *</label>
-                        <div className="space-y-2">
+                        <label className="block text-gray-700 font-semibold mb-3">궁금한 부분 (중복 선택) *</label>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                           {[
-                            '정책자금 / 정부지원사업',
-                            '절세 / 세금 환급 / 경정청구',
-                            '법인 설립 / 법인 제도 정비',
-                            '기업 인증 / 연구소 설립',
-                            '고용지원금 / 기업훈련 지원비',
-                            '특허 / 상표권',
-                            '기업 신용등급 관리',
-                            '기타'
+                            '정책자금 / 정부지원사업', '절세 / 세금 환급', '법인 설립 / 제도 정비', '기업 인증 / 연구소', '고용지원금 / 훈련비', '특허 / 상표권', '기업 신용등급 관리', '기타'
                           ].map(interest => (
                             <button
                               key={interest}
                               type="button"
                               onClick={() => handleInterestToggle(interest)}
-                              className={`w-full p-3 rounded-lg border-2 text-left font-medium transition ${
-                                formData.interests.includes(interest)
-                                  ? 'border-teal-600 bg-teal-50 text-teal-700'
-                                  : 'border-gray-300 hover:border-teal-400'
+                              className={`p-3 rounded-lg border-2 text-left text-sm font-medium transition flex items-center ${
+                                formData.interests.includes(interest) ? 'border-teal-600 bg-teal-50 text-teal-700' : 'border-gray-200 hover:border-teal-400'
                               }`}
                             >
-                              <CheckCircle className={`inline mr-2 ${formData.interests.includes(interest) ? 'text-teal-600' : 'text-gray-300'}`} size={20} />
+                              <CheckCircle className={`mr-2 ${formData.interests.includes(interest) ? 'text-teal-600' : 'text-gray-300'}`} size={16} />
                               {interest}
                             </button>
                           ))}
                         </div>
                       </div>
 
+                      {/* 휴대폰 번호 */}
                       <div>
                         <label className="block text-gray-700 font-semibold mb-3">연락 가능한 휴대폰 번호 *</label>
                         <input
@@ -420,28 +375,13 @@
                           value={formData.phone}
                           onChange={(e) => setFormData({...formData, phone: e.target.value})}
                           placeholder="010-0000-0000"
-                          className="w-full p-4 border-2 border-gray-300 rounded-lg focus:border-teal-600 focus:outline-none"
+                          className="w-full p-3 md:p-4 border-2 border-gray-200 rounded-lg focus:border-teal-600 focus:outline-none"
                         />
-                      </div>
-
-                      <div className="bg-gray-50 p-4 rounded-lg space-y-2 text-sm text-gray-600">
-                        <div className="flex items-center space-x-2">
-                          <CheckCircle className="text-teal-600 flex-shrink-0" size={16} />
-                          <span>무료 진단 후 진행 여부는 대표님이 결정합니다</span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <CheckCircle className="text-teal-600 flex-shrink-0" size={16} />
-                          <span>불필요한 컨설팅은 권하지 않습니다</span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <CheckCircle className="text-teal-600 flex-shrink-0" size={16} />
-                          <span>상담 내용은 비밀 보장됩니다</span>
-                        </div>
                       </div>
 
                       <button
                         onClick={handleSubmit}
-                        className="w-full bg-teal-600 text-white py-5 rounded-xl font-bold text-xl hover:bg-teal-700 transition shadow-lg"
+                        className="w-full bg-teal-600 text-white py-4 md:py-5 rounded-xl font-bold text-lg md:text-xl hover:bg-teal-700 transition shadow-lg active:scale-95"
                       >
                         무료 진단 신청하기
                       </button>
@@ -450,17 +390,17 @@
                 </div>
               </section>
 
-              {/* Footer */}
+              {/* Footer: 반응형 레이아웃 적용 */}
               <footer className="bg-gray-900 text-gray-300 py-12 px-6">
                 <div className="max-w-6xl mx-auto">
-                  <div className="grid md:grid-cols-3 gap-8 mb-8">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                     <div>
                       <h4 className="text-white font-bold text-xl mb-4">오아시스 세무회계</h4>
-                      <p className="text-gray-400">대표님의 성공적인 경영을 위한 전문 파트너</p>
+                      <p className="text-gray-400 text-sm">대표님의 성공적인 경영을 위한 전문 파트너</p>
                     </div>
                     <div>
-                      <h5 className="text-white font-semibold mb-3">주요 서비스</h5>
-                      <ul className="space-y-2 text-sm">
+                      <h5 className="text-white font-semibold mb-3 text-sm uppercase tracking-wider">주요 서비스</h5>
+                      <ul className="space-y-2 text-sm text-gray-400">
                         <li>정책자금 및 정부지원사업</li>
                         <li>기업 인증 및 연구소 설립</li>
                         <li>절세 전략 컨설팅</li>
@@ -468,32 +408,21 @@
                       </ul>
                     </div>
                     <div>
-                      <h5 className="text-white font-semibold mb-3">문의하기</h5>
-                      <div className="space-y-2 text-sm">
-                        <div className="flex items-center space-x-2">
-                          <Phone size={16} />
-                          <span>상담 문의: 010-3054-8572</span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <Mail size={16} />
-                          <span>www.oasistax.co.kr</span>
-                        </div>
+                      <h5 className="text-white font-semibold mb-3 text-sm uppercase tracking-wider">문의하기</h5>
+                      <div className="space-y-2 text-sm text-gray-400">
+                        <div className="flex items-center space-x-2"><Phone size={14} /><span>010-3054-8572</span></div>
+                        <div className="flex items-center space-x-2"><Mail size={14} /><span>www.oasistax.co.kr</span></div>
                       </div>
                     </div>
                   </div>
-                  <div className="border-t border-gray-700 pt-6 text-center text-sm text-gray-500">
+                  <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 gap-4">
                     <p>© 2026 오아시스 세무회계. All rights reserved.</p>
-                    {/* 추가된 버튼: 클릭하면 팝업이 열립니다 */}
-            <button 
-              onClick={() => setIsModalOpen(true)}
-              className="mt-4 md:mt-0 hover:text-white underline transition decoration-gray-600 underline-offset-4"
-            >
-              개인정보처리방침
-            </button>
+                    <button onClick={() => setIsModalOpen(true)} className="hover:text-white underline underline-offset-4 decoration-gray-700">개인정보처리방침</button>
                   </div>
                 </div>
               </footer>
-              {/* --- 개인정보처리방침 팝업창 --- */}
+
+               {/* --- 개인정보처리방침 팝업창 --- */}
 {isModalOpen && (
   <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
     <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[85vh] flex flex-col shadow-2xl animate-in fade-in zoom-in duration-200">
