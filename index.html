@@ -73,18 +73,24 @@
           return (
             <div className="min-h-screen bg-white">
               {/* Header */}
-              <header className="bg-gradient-to-r from-teal-700 to-teal-600 text-white py-4 px-6 shadow-lg sticky top-0 z-50">
-                <div className="max-w-6xl mx-auto flex justify-between items-center">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                      <span className="text-teal-700 font-bold text-xl">O</span>
-                    </div>
-                    <h1 className="text-2xl font-bold tracking-tight">오아시스 세무회계</h1>
-                  </div>
-                  <button 
-                    onClick={() => document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth' })}
-                    className="bg-white text-teal-700 px-6 py-2 rounded-full font-semibold hover:bg-teal-50 transition"
-                  >
+<header className="bg-gradient-to-r from-teal-700 to-teal-600 text-white py-4 px-6 shadow-lg sticky top-0 z-50">
+  <div className="max-w-6xl mx-auto flex justify-between items-center">
+    <div className="flex items-center space-x-3">
+      {/* --- 로고 이미지 삽입 영역 시작 --- */}
+      <div className="w-15 h-12 flex items-center justify-center overflow-hidden">
+        <img 
+          src="oasislogo1.png"  /* ← 여기에 로고 이미지 파일 경로를 넣으세요 (예: ./images/logo.png) */
+          alt="오아시스 세무회계 로고" 
+          className="w-full h-full object-contain" 
+        />
+      </div>
+      {/* --- 로고 이미지 삽입 영역 끝 --- */}
+      <h1 className="text-2xl font-bold tracking-tight">오아시스 세무회계</h1>
+    </div>
+    <button 
+      onClick={() => document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth' })}
+      className="bg-white text-teal-700 px-6 py-2 rounded-full font-semibold hover:bg-teal-50 transition"
+    >
                     무료 진단 받기
                   </button>
                 </div>
